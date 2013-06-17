@@ -52,12 +52,17 @@ public class ReportGenerator {
 			System.exit(0);
 		}
 
-		for(int i = 0; i < 3; i++)
-			result += parseTimeCalculations(data.get(i));
+		parseTimeCalculations(data.get(0), data.get(1), data.get(2));
 
 		for(int i = 3; i < 12; i++)
 			result += parseMemoryCalculations(data.get(i));
 	}
 
+	private String parseTimeCalculations(
+			String time1, String time2, String time3) {
+		String results;
 
+		results = "------------------------------------------------------------\n";
+		results += "| Time                                                     |\n";
+	}
 }
