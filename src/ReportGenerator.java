@@ -5,9 +5,7 @@
  * project: report_generator
  */
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.PrintWriter;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -20,12 +18,20 @@ public class ReportGenerator {
 	public ReportGenerator(String inputFile, String outputFile) {
 		try {
 			input = new Scanner(new File(inputFile));
-		} catch (FileNotFoundException e) {
+		} catch (FileNotFoundException fnfe) {
 			System.err.println(
 				"Usage: java report-generator.java INPUT.txt OUTPUT.txt");
 			System.exit(0);
 		}
+		try {
+			out = new PrintWriter(new FileWriter(new File(outputFile)));
+		} catch (IOException ioe) {
+			System.err.println("IOException: " +
+					"Could not create print writer for /results/" + outputFile);
+			System.exit(0);
+		}
 		parseFile();
+		System.out.println("Report written to /results/" + outputFile);
 	}
 
 	public static void main(String[] args) {
@@ -55,8 +61,12 @@ public class ReportGenerator {
 			System.exit(0);
 		}
 
-		parseTimeCalculations(data.subList(0, 3));
-		parseMemoryCalculations(data.subList(3, data.size()));
+		result += "I. Result.\n\n";
+		result += "II. Time.\n";
+		result += parseTimeCalculations(data.subList(0, 3));
+		result += "III. Base, Average, and Peak Memory.\n";
+		result += parseMemoryCalculations(data.subList(3, data.size()));
+		writeResults(result);
 	}
 
 	private String parseTimeCalculations(List<String> times) {
@@ -73,7 +83,6 @@ public class ReportGenerator {
 			+ String.format("%-60s", "| Loop Strategy   | " + times.get(2))
 				+ "|\n "
 			+ String.format("%60s", "\n").replace(' ', '-');
-		System.out.println(results);
 		return results;
 	}
 
@@ -102,11 +111,13 @@ public class ReportGenerator {
 				+ String.format("%-12s", memories.get(8))
 					+ "|\n "
 			+ String.format("%60s", "\n").replace(' ', '-');
-		System.out.println(results);
 		return results;
 	}
 
-	private void writeResults(String outFile, String results) {
-
+	private void writeResults(String results) {
+		out.flush();
+		out.write(results);
+		out.flush();
+		out.close();
 	}
 }
