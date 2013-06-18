@@ -31,7 +31,7 @@ public class ReportGenerator {
 			System.exit(0);
 		}
 		parseFile();
-		System.out.println("Report written to /results/" + outputFile);
+		// System.out.println("Report written to /results/" + outputFile);
 	}
 
 	public static void main(String[] args) {
