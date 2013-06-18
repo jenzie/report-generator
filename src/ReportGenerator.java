@@ -86,9 +86,9 @@ public class ReportGenerator {
 
 		// get results
 		result += "I. Result.\n\n";
-		result += "II. Time.\n";
+		result += "\nII. Time.\n";
 		result += parseTimeCalculations(data.subList(0, 3));
-		result += "III. Base, Average, and Peak Memory.\n";
+		result += "\nIII. Base, Average, and Peak Memory.\n";
 		result += parseMemoryCalculations(data.subList(3, data.size()));
 
 		// write results
